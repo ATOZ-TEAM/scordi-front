@@ -12,6 +12,7 @@ import {OrgSubscriptionSelectPageRoute} from '^pages/orgs/[id]/subscriptions/sel
 import {FaPlus} from 'react-icons/fa6';
 import {useRecoilValue} from 'recoil';
 import {orgIdParamState} from '^atoms/common';
+import {TbListSearch} from 'react-icons/tb';
 
 export const SubscriptionListOfCreditCardTabContent = memo(() => {
     const orgId = useRecoilValue(orgIdParamState);
@@ -28,9 +29,13 @@ export const SubscriptionListOfCreditCardTabContent = memo(() => {
     };
 
     const AddSubscriptionButton = () => (
-        <LinkTo href={OrgSubscriptionSelectPageRoute.path(orgId)} className="btn btn-scordi gap-2" loadingOnBtn>
+        <LinkTo
+            href={OrgSubscriptionSelectPageRoute.path(orgId)}
+            className="btn btn-scordi gap-2 h-[44px]"
+            loadingOnBtn
+        >
             <FaPlus />
-            <span>새 구독 등록</span>
+            <span>구독 등록</span>
         </LinkTo>
     );
 
@@ -76,7 +81,11 @@ export const SubscriptionListOfCreditCardTabContent = memo(() => {
                         Row={({item}) => <CreditCardSubscriptionTableRow subscription={item} reload={reload} />}
                     />
                 ) : (
-                    <EmptyTable icon={'🔍'} message="등록된 구독이 없어요." Buttons={() => <AddSubscriptionButton />} />
+                    <EmptyTable
+                        icon={<TbListSearch size={32} />}
+                        message="등록된 구독이 없어요."
+                        Buttons={() => <AddSubscriptionButton />}
+                    />
                 )}
             </ListTableContainer>
         </section>

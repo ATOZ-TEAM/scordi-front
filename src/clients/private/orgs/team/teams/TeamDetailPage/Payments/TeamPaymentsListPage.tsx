@@ -10,6 +10,7 @@ import {TeamPaymentTableHeader} from '^clients/private/orgs/team/teams/TeamDetai
 import {TeamPaymentTableRow} from '^clients/private/orgs/team/teams/TeamDetailPage/Payments/TeamPaymentTableRow';
 import {FaPlus} from 'react-icons/fa6';
 import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
+import {TbReportSearch} from 'react-icons/tb';
 
 export const TeamPaymentsListPage = memo(function TeamPaymentsListPage() {
     const teamId = useRecoilValue(teamIdParamState);
@@ -54,9 +55,9 @@ export const TeamPaymentsListPage = memo(function TeamPaymentsListPage() {
                 </ListTableContainer>
             ) : (
                 <EmptyTable
-                    icon={'💳'}
-                    message="등록된 결제수단이 없어요."
-                    buttonText={'결제수단 등록'}
+                    icon={<TbReportSearch size={32} />}
+                    message="연결된 결제수단이 없어요."
+                    buttonText={'결제수단 연결'}
                     buttonAction={() => setIsOpened(true)}
                 />
             )}

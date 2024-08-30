@@ -12,6 +12,7 @@ import {CreditCardTableHeader} from './CreditCardTableHeader';
 import {CreditCardTableRow} from './CreditCardTableRow';
 import {AddCreditCardDropdown} from './AddCreditCardDropdown';
 import {isCardAutoCreateModalAtom} from './atom';
+import {TbReportSearch} from 'react-icons/tb';
 
 export const OrgCreditCardListPage = memo(function OrgCreditCardListPage() {
     const organizationId = useRecoilValue(orgIdParamState);
@@ -58,7 +59,11 @@ export const OrgCreditCardListPage = memo(function OrgCreditCardListPage() {
                     />
                 </ListTableContainer>
             ) : (
-                <EmptyTable icon={'💳'} message="등록된 결제수단이 없어요." Buttons={AddCreditCardDropdown} />
+                <EmptyTable
+                    icon={<TbReportSearch size={32} />}
+                    message="등록된 결제수단이 없어요."
+                    Buttons={AddCreditCardDropdown}
+                />
             )}
 
             <CardAutoCreateModal

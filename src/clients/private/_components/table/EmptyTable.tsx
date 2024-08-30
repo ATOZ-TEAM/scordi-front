@@ -14,8 +14,8 @@ export const EmptyTable = memo((props: EmptyTableProps) => {
 
     return (
         <div className={'text-center py-16'}>
-            <p className={'text-2xl'}>{icon}</p>
-            <p>{message}</p>
+            <p className={'text-2xl flex justify-center my-3'}>{icon}</p>
+            <p className="mb-[2px]">{message}</p>
 
             {Buttons && (
                 <div className={'py-4'}>

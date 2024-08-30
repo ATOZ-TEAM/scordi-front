@@ -12,6 +12,7 @@ import {InvoicesTableHeader} from '^clients/private/orgs/team/teams/TeamDetailPa
 import {InvoicesTableRow} from '^clients/private/orgs/team/teams/TeamDetailPage/Invoices/InvoicesTableRow';
 import {FaPlus} from 'react-icons/fa6';
 import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
+import {TbMailSearch} from 'react-icons/tb';
 
 export const TeamInvoicesListPage = memo(function TeamInvoicesListPage() {
     const orgId = useRecoilValue(orgIdParamState);
@@ -60,9 +61,9 @@ export const TeamInvoicesListPage = memo(function TeamInvoicesListPage() {
                 </ListTableContainer>
             ) : (
                 <EmptyTable
-                    icon={'📃'}
-                    message="등록된 청구서수신계정이 없어요."
-                    buttonText={'청구서수신계정 등록'}
+                    icon={<TbMailSearch size={32} />}
+                    message="연결된 청구서수신계정이 없어요."
+                    buttonText={'청구서수신계정 연결'}
                     buttonAction={() => setIsOpened(true)}
                 />
             )}

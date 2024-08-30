@@ -14,6 +14,7 @@ import {useTeamCreditCardListInTeamDetail} from '^models/TeamCreditCard/hook';
 import {AddMemberModal} from '^clients/private/orgs/team/teams/TeamDetailPage/Members/AddMemberModal';
 import {FaPlus} from 'react-icons/fa6';
 import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
+import {TbUserSearch} from 'react-icons/tb';
 
 export const TeamMembersListPage = memo(function TeamMembersListPage() {
     const teamId = useRecoilValue(teamIdParamState);
@@ -63,9 +64,9 @@ export const TeamMembersListPage = memo(function TeamMembersListPage() {
                 </ListTableContainer>
             ) : (
                 <EmptyTable
-                    icon={'👤'}
-                    message="등록된 구성원이 없어요."
-                    buttonText={'구성원 등록'}
+                    icon={<TbUserSearch size={32} />}
+                    message="연결된 구성원이 없어요."
+                    buttonText={'구성원 연결'}
                     buttonAction={() => setIsOpened(true)}
                 />
             )}

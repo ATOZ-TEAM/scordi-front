@@ -11,6 +11,8 @@ import {AddInvoiceAccountDropdown} from './AddInvoiceAccountDropdown';
 import {InvoiceAccountAutoCreateModal} from '^clients/private/orgs/subscriptions/OrgSubscriptionConnectsPage/ContentFunnels/inputs/InvoiceAccountSelect/InvoiceAccountAutoCreateModal';
 import {isInvoiceAccountAutoCreateModalAtom} from './atom';
 import {toast} from 'react-hot-toast';
+import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
+import {TbMailSearch} from 'react-icons/tb';
 
 export const OrgInvoiceAccountListPage = memo(function OrgInvoiceAccountListPage() {
     const organizationId = useRecoilValue(orgIdParamState);
@@ -45,19 +47,27 @@ export const OrgInvoiceAccountListPage = memo(function OrgInvoiceAccountListPage
             searchInputPlaceholder="검색어를 입력해주세요"
             onSearch={onSearch}
         >
-            <ListTableContainer
-                pagination={result.pagination}
-                movePage={movePage}
-                changePageSize={changePageSize}
-                unit="개"
-            >
-                <ListTable
-                    items={result.items}
-                    isLoading={isLoading}
-                    Header={() => <InvoiceAccountTableHeader orderBy={orderBy} />}
-                    Row={({item}) => <InvoiceAccountTableRow invoiceAccount={item} reload={reload} />}
+            {result.pagination.totalItemCount > 0 ? (
+                <ListTableContainer
+                    pagination={result.pagination}
+                    movePage={movePage}
+                    changePageSize={changePageSize}
+                    unit="개"
+                >
+                    <ListTable
+                        items={result.items}
+                        isLoading={isLoading}
+                        Header={() => <InvoiceAccountTableHeader orderBy={orderBy} />}
+                        Row={({item}) => <InvoiceAccountTableRow invoiceAccount={item} reload={reload} />}
+                    />
+                </ListTableContainer>
+            ) : (
+                <EmptyTable
+                    icon={<TbMailSearch size={32} />}
+                    message="연결된 청구서수신계정이 없어요."
+                    buttonText={'청구서수신계정 연결'}
                 />
-            </ListTableContainer>
+            )}
 
             <InvoiceAccountAutoCreateModal
                 isOpened={isCreateModalOpened}

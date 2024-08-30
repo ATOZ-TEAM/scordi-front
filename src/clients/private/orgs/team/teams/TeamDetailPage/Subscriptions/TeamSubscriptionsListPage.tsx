@@ -2,7 +2,7 @@ import React, {memo, useEffect} from 'react';
 import {TeamDetailLayout} from '^clients/private/orgs/team/teams/TeamDetailPage/TeamDetailLayout';
 import {ListPageSearchInput} from '^clients/private/_layouts/_shared/ListPageSearchInput';
 import {useRecoilValue} from 'recoil';
-import {teamIdParamState} from '^atoms/common';
+import {orgIdParamState, teamIdParamState} from '^atoms/common';
 import {ListTable, ListTableContainer} from '^clients/private/_components/table/ListTable';
 import {SubscriptionTableRow} from '^clients/private/orgs/team/teams/TeamDetailPage/Subscriptions/TeamSubscriptionTableRow';
 
@@ -11,13 +11,30 @@ import {SubscriptionTableHeader} from '^clients/private/orgs/team/teams/TeamDeta
 import {useTeamsSubscriptionForDetailPage} from '^models/Team/hook';
 import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
 
+import {FaPlus} from 'react-icons/fa6';
+import {TbListSearch} from 'react-icons/tb';
+import {LinkTo} from '^components/util/LinkTo';
+import {OrgSubscriptionSelectPageRoute} from '^pages/orgs/[id]/subscriptions/select';
+
 export const TeamSubscriptionsListPage = memo(function TeamSubscriptionsListPage() {
+    const orgId = useRecoilValue(orgIdParamState);
     const teamId = useRecoilValue(teamIdParamState);
     const {search, result, isLoading, orderBy, reload, movePage, changePageSize} = useTeamsSubscriptionForDetailPage();
 
     const onSearch = (keyword?: string) => {
         search({keyword, relations: ['teamMember', 'teamMember.teams', 'subscription']});
     };
+
+    const AddSubscriptionButton = () => (
+        <LinkTo
+            href={OrgSubscriptionSelectPageRoute.path(orgId)}
+            className="btn btn-scordi gap-2 h-[44px]"
+            loadingOnBtn
+        >
+            <FaPlus />
+            <span>구독 연결</span>
+        </LinkTo>
+    );
 
     useEffect(() => {
         !!teamId && search({where: {}, relations: ['teamMember', 'teamMember.teams', 'subscription']});
@@ -49,7 +66,11 @@ export const TeamSubscriptionsListPage = memo(function TeamSubscriptionsListPage
                     />
                 </ListTableContainer>
             ) : (
-                <EmptyTable icon={'🔍'} message="등록된 구독이 없어요." />
+                <EmptyTable
+                    icon={<TbListSearch size={32} />}
+                    message="연결된 구독이 없어요."
+                    Buttons={() => <AddSubscriptionButton />}
+                />
             )}
         </TeamDetailLayout>
     );

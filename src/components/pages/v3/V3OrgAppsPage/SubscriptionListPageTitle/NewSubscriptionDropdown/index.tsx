@@ -25,7 +25,7 @@ export const NewSubscriptionDropdown = memo(() => {
     return (
         <div className="dropdown dropdown-end">
             <button className="btn btn-scordi m-1 gap-2 whitespace-nowrap flex-nowrap mt-8 md:mt-0 btn-lg md:btn-md w-full md:w-auto">
-                새 구독 등록 <FaPlus />
+                구독 등록 <FaPlus />
             </button>
             <ul tabIndex={0} className="dropdown-content menu p-2 shadow bg-base-100 rounded-box w-52 text-sm">
                 <li onClick={() => !isLoading && onClick()}>
