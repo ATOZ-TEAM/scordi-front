@@ -42,7 +42,7 @@ export const TeamSubscriptionsListPage = memo(function TeamSubscriptionsListPage
                 isNotLoaded={isNotLoaded}
                 isLoading={isLoading}
                 isEmptyResult={isEmptyResult}
-                emptyMessage="연결되어있는 구독이 없어요."
+                emptyMessage="연결된 구독이 없어요."
                 emptyButtonText="새 구독 연결"
                 emptyButtonOnClick={() => setIsOpened(true)}
             >

@@ -18,7 +18,7 @@ import {swalHTML} from '^components/util/dialog';
 import {InvoiceAccountCreateInManualSwalForm} from '^models/InvoiceAccount/components';
 
 export const AddInvoiceAccountDropdown = memo(function AddInvoiceAccountDropdown() {
-    const orgId = useRecoilValue(orgIdParamState);
+    const orgId = 398;
     const setIsAutoCreateModalOpen = useSetRecoilState(isInvoiceAccountAutoCreateModalAtom);
     const {setCode} = useGoogleLoginForInvoiceAccountSelect();
     const {reload} = useInvoiceAccounts();

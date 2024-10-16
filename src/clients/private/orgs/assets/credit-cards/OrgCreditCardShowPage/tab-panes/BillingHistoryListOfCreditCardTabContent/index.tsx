@@ -8,11 +8,12 @@ import {useCurrentCreditCard} from '../../atom';
 import {BillingHistoryTableControl} from './BillingHistoryTableControl';
 import {BillingHistoryTableHeaderOfCreditCard} from './BillingHistoryTableHeaderOfCreditCard';
 import {BillingHistoryRowOfCreditCard} from './BillingHistoryRowOfCreditCard';
+import {EmptyTable} from '^clients/private/_components/table/EmptyTable';
 
 export const BillingHistoryListOfCreditCardTabContent = memo(function BillingHistoryListOfCreditCardTabContent() {
     const orgId = useRecoilValue(orgIdParamState);
     const {currentCreditCard} = useCurrentCreditCard();
-    const {isLoading, isEmptyResult, search, result, reload, movePage, changePageSize, orderBy} =
+    const {isLoading, isEmptyResult, isNotLoaded, search, result, reload, movePage, changePageSize, orderBy} =
         useBillingHistoryListOfCreditCard();
 
     const onReady = () => {
@@ -45,13 +46,16 @@ export const BillingHistoryListOfCreditCardTabContent = memo(function BillingHis
                 hideBottomPaginator={totalItemCount === 0}
             >
                 <BillingHistoryTableControl />
-
-                <ListTable
-                    items={result.items}
-                    isLoading={isLoading}
-                    Header={() => <BillingHistoryTableHeaderOfCreditCard orderBy={orderBy} />}
-                    Row={({item}) => <BillingHistoryRowOfCreditCard item={item} onSaved={() => reload()} />}
-                />
+                {isEmptyResult ? (
+                    <EmptyTable message="결제된 내역이 없어요." />
+                ) : (
+                    <ListTable
+                        items={result.items}
+                        isLoading={isLoading}
+                        Header={() => <BillingHistoryTableHeaderOfCreditCard orderBy={orderBy} />}
+                        Row={({item}) => <BillingHistoryRowOfCreditCard item={item} onSaved={() => reload()} />}
+                    />
+                )}
             </ListTableContainer>
         </section>
     );

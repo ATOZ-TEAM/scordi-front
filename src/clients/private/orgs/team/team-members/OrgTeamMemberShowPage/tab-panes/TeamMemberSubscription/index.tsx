@@ -7,7 +7,7 @@ import {TeamMemberSubscriptionTableRow} from './TeamMemberSubscriptionTableRow';
 
 export const TeamMemberSubscription = memo(function TeamMemberSubscription() {
     const {currentTeamMember: teamMember} = useCurrentTeamMember();
-    const {search, result, isLoading, movePage, changePageSize, reload, orderBy} =
+    const {search, result, isLoading, movePage, changePageSize, reload, orderBy, isNotLoaded, isEmptyResult} =
         useSubscriptionsInTeamMemberShowPage();
 
     if (!teamMember) return <></>;
@@ -30,6 +30,12 @@ export const TeamMemberSubscription = memo(function TeamMemberSubscription() {
                 movePage={movePage}
                 changePageSize={changePageSize}
                 // hideTopPaginator
+                // Empty State Props
+                isNotLoaded={isNotLoaded}
+                isLoading={isLoading}
+                isEmptyResult={isEmptyResult}
+                emptyMessage="연결된 구독이 없어요."
+                emptyButtonText="새 구독 연결"
             >
                 <ListTable
                     onReady={onReady}
