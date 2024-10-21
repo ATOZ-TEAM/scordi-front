@@ -37,8 +37,5 @@ export const EmptyTable = memo((props: EmptyTableProps) => {
 const DefaultEmptyIcon = () => (
     <div className="relative">
         <HiMiniInbox className="text-slate-200" fontSize={48} />
-        <div className="absolute top-[12px] left-[14px]">
-            <GiSadCrab className="text-slate-100 hover:text-red-200 hover:animate-bounce" fontSize={20} />
-        </div>
     </div>
 );

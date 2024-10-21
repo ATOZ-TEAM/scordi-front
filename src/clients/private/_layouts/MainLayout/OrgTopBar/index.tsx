@@ -1,4 +1,4 @@
-import {memo} from 'react';
+import {memo, useState} from 'react';
 import {FaBell, FaPlus} from 'react-icons/fa6';
 import {useCurrentUser} from '^models/User/hook';
 import {WorkspaceDropdown} from './WorkspaceDropdown';
@@ -9,12 +9,14 @@ import {useRecoilValue} from 'recoil';
 import {currentOrgAtom} from '^models/Organization/atom';
 import {useMeasuredUserId} from '^components/ExternalCDNScripts/measured';
 import {t_membershipLevel} from '^models/Membership/types';
+import {GiSadCrab} from 'react-icons/gi';
 
 export const OrgTopBar = memo(() => {
     const {currentUser} = useCurrentUser();
     const currentOrg = useRecoilValue(currentOrgAtom);
     const currentMembership = currentOrg && currentUser && currentUser.findMembershipByOrgId(currentOrg.id);
     useMeasuredUserId();
+    const [isHovered, setIsHovered] = useState(false);
 
     return (
         <header className="container-fluid h-[56px] flex items-center gap-6 border-b bg-white-blurred text-scordi sticky top-0 z-20">
@@ -27,9 +29,24 @@ export const OrgTopBar = memo(() => {
             <div className="hidden lg:block">
                 <div className="text-14 tracking-[0.01rem]">
                     {currentUser?.name}님은{' '}
-                    {currentMembership ? `${t_membershipLevel(currentMembership?.level, {inWord: false})}입니다.` : ''}
+                    {currentMembership ? (
+                        <span>
+                            {t_membershipLevel(currentMembership?.level, {inWord: false})}입니다
+                            <span onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
+                                .
+                            </span>
+                        </span>
+                    ) : (
+                        ''
+                    )}
                 </div>
             </div>
+
+            {/* @ts-ignore */}
+            <marquee className={`w-[20rem] ${isHovered ? '' : 'hidden'}`} direction="right">
+                <GiSadCrab className="text-red-600" fontSize={20} />
+                {/* @ts-ignore */}
+            </marquee>
 
             <div className="ml-auto flex items-center gap-8">
                 <div className="hidden sm:block">

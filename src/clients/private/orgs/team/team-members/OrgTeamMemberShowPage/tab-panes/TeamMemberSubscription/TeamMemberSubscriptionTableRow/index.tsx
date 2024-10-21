@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {TeamMemberDto} from '^models/TeamMember';
+import {teamMemberApi, TeamMemberDto} from '^models/TeamMember';
 import {SubscriptionDto} from '^models/Subscription/types';
 import {SubscriptionProfile} from '^models/Subscription/components/SubscriptionProfile';
 import {
@@ -11,6 +11,11 @@ import {
     PayingType,
     PayMethodSelect,
 } from '^v3/V3OrgAppsPage/SubscriptionListSection/SubscriptionTable/SubscriptionTr/columns';
+import Tippy from '@tippyjs/react';
+import {BsDashCircle} from 'react-icons/bs';
+import {confirm2} from '^components/util/dialog';
+import {subscriptionApi} from '^models/Subscription/api';
+import {toast} from 'react-hot-toast';
 
 interface TeamMemberSubscriptionTableRowProps {
     teamMember: TeamMemberDto;
@@ -20,6 +25,18 @@ interface TeamMemberSubscriptionTableRowProps {
 
 export const TeamMemberSubscriptionTableRow = memo((props: TeamMemberSubscriptionTableRowProps) => {
     const {teamMember, subscription, reload} = props;
+
+    const disconnect = async () => {
+        const isConfirmed = await confirm2(
+            '이 멤버와 연결을 해제할까요?',
+            '구독이 삭제되는건 아니니 안심하세요',
+            'warning',
+        ).then((res) => res.isConfirmed);
+        if (!isConfirmed) return;
+        await teamMemberApi.subscriptions.disconnect(teamMember.id, subscription.id);
+        toast.success('연결을 해제했어요');
+        reload();
+    };
 
     return (
         <tr>
@@ -74,7 +91,22 @@ export const TeamMemberSubscriptionTableRow = memo((props: TeamMemberSubscriptio
             </td>
 
             {/* Actions */}
-            {/*<td></td>*/}
+            <td>
+                <div className="flex items-center justify-center">
+                    <Tippy className="!text-12" content="안써요">
+                        <button
+                            className="relative text-red-300 hover:text-red-500 transition-all"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                disconnect();
+                            }}
+                        >
+                            <BsDashCircle className="" size={24} strokeWidth={0.3} />
+                        </button>
+                    </Tippy>
+                </div>
+            </td>
         </tr>
     );
 });

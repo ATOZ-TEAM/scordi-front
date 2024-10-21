@@ -9,8 +9,19 @@ import {TeamMemberTableHeader} from './TeamMemberTableHeader';
 import {TeamMemberTableRow} from './TeamMemberTableRow';
 
 export const OrgTeamMemberListPage = memo(function OrgTeamMemberListPage() {
-    const {search, result, isLoading, query, searchAndUpdateCounter, movePage, changePageSize, reload, orderBy} =
-        useTeamMembersInTeamMembersTable();
+    const {
+        search,
+        result,
+        isLoading,
+        isEmptyResult,
+        isNotLoaded,
+        query,
+        searchAndUpdateCounter,
+        movePage,
+        changePageSize,
+        reload,
+        orderBy,
+    } = useTeamMembersInTeamMembersTable();
 
     const onReady = () => {
         searchAndUpdateCounter({
@@ -44,6 +55,12 @@ export const OrgTeamMemberListPage = memo(function OrgTeamMemberListPage() {
                 movePage={movePage}
                 changePageSize={changePageSize}
                 unit="명"
+                isNotLoaded={isNotLoaded}
+                isLoading={isLoading}
+                isEmptyResult={isEmptyResult}
+                emptyMessage="조회된 구성원이 없어요."
+                emptyButtonText="구성원 등록"
+                EmptyButtons={AddTeamMemberJustButton}
             >
                 <ListTable
                     items={result.items}

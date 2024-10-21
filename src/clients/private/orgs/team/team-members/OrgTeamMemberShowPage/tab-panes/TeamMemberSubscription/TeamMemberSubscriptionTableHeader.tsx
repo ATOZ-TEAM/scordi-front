@@ -60,7 +60,7 @@ export const TeamMemberSubscriptionTableHeader = memo((props: TeamMemberSubscrip
             </SortableTH>
 
             {/* Actions */}
-            {/*<th className="bg-transparent"></th>*/}
+            <th className="" />
         </tr>
     );
 });

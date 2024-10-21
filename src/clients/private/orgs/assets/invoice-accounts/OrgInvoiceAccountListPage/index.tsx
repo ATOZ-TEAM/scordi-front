@@ -14,7 +14,19 @@ import {toast} from 'react-hot-toast';
 
 export const OrgInvoiceAccountListPage = memo(function OrgInvoiceAccountListPage() {
     const organizationId = useRecoilValue(orgIdParamState);
-    const {search, reset, reload, result, isLoading, query, movePage, changePageSize, orderBy} = useInvoiceAccounts();
+    const {
+        search,
+        reset,
+        reload,
+        result,
+        isLoading,
+        isNotLoaded,
+        isEmptyResult,
+        query,
+        movePage,
+        changePageSize,
+        orderBy,
+    } = useInvoiceAccounts();
     const [isCreateModalOpened, setCreateModalOpen] = useRecoilState(isInvoiceAccountAutoCreateModalAtom);
 
     const onReady = () => {
@@ -50,6 +62,12 @@ export const OrgInvoiceAccountListPage = memo(function OrgInvoiceAccountListPage
                 movePage={movePage}
                 changePageSize={changePageSize}
                 unit="개"
+                // Empty State Props
+                isNotLoaded={isNotLoaded}
+                isLoading={isLoading}
+                isEmptyResult={isEmptyResult}
+                emptyMessage="조회된 청구서 수신 메일이 없어요."
+                EmptyButtons={AddInvoiceAccountDropdown}
             >
                 <ListTable
                     items={result.items}
