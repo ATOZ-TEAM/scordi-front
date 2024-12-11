@@ -22,7 +22,7 @@ export const CurrencyToggle = memo((props: CurrencyToggleProps) => {
 
                     <input
                         type="checkbox"
-                        className="toggle toggle-primary"
+                        className={`toggle ${displayCurrency === CurrencyCode.KRW ? 'bg-scordi' : 'bg-gray-300'}`}
                         checked={displayCurrency === CurrencyCode.KRW}
                         onChange={(e) => {
                             const checked = e.target.checked;

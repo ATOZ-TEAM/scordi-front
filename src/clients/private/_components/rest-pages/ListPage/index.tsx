@@ -7,6 +7,7 @@ import {WithChildren} from '^types/global.type';
 import {MainContainer, MainLayout} from '^clients/private/_layouts/MainLayout';
 import {Breadcrumb, BreadcrumbPath} from '^clients/private/_layouts/_shared/Breadcrumb';
 import {ListPageSearchInput} from '^clients/private/_layouts/_shared/ListPageSearchInput';
+import {LuDownload} from 'react-icons/lu';
 
 interface ListPageProps extends WithChildren {
     onReady?: () => any;
@@ -20,6 +21,7 @@ interface ListPageProps extends WithChildren {
     searchInputPlaceholder?: string;
     searchInputPosition?: 'start-of-buttons' | 'end-of-buttons' | 'right-of-scopes';
     scopeWrapperClass?: string;
+    onDownload?: () => void;
 }
 
 export const ListPage = memo((props: ListPageProps) => {
@@ -36,6 +38,7 @@ export const ListPage = memo((props: ListPageProps) => {
         searchInputPosition = 'right-of-scopes',
         scopeWrapperClass = '',
         children,
+        onDownload,
     } = props;
     const orgId = useRecoilValue(orgIdParamState);
     const router = useRouter();
@@ -69,12 +72,22 @@ export const ListPage = memo((props: ListPageProps) => {
                     </div>
                 </div>
 
-                {(ScopeHandler || searchInputPosition === 'right-of-scopes') && (
+                {(onDownload || ScopeHandler || searchInputPosition === 'right-of-scopes') && (
                     <div className={`flex items-center justify-between mb-8 ${scopeWrapperClass}`}>
                         {ScopeHandler ? <ScopeHandler /> : <div />}
-                        {searchInputPosition === 'right-of-scopes' && onSearch && (
-                            <ListPageSearchInput onSearch={onSearch} placeholder={searchInputPlaceholder} />
-                        )}
+                        <div className={'flex space-x-2'}>
+                            {onDownload && (
+                                <button
+                                    className="btn btn-outline animate-none btn-animation bg-white border-gray-300"
+                                    onClick={onDownload}
+                                >
+                                    <LuDownload fontSize={20} />
+                                </button>
+                            )}
+                            {searchInputPosition === 'right-of-scopes' && onSearch && (
+                                <ListPageSearchInput onSearch={onSearch} placeholder={searchInputPlaceholder} />
+                            )}
+                        </div>
                     </div>
                 )}
 
